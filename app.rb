@@ -1,5 +1,5 @@
 require 'sinatra'
 
 get '/' do
-  redirect "scuteser.herokuapp.com"
+  redirect "http://scuteser.herokuapp.com"
 end
