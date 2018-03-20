@@ -1,5 +1,5 @@
 require 'sinatra'
 
 get '/' do
-  erb :master
+  redirect "scuteser.herokuapp.com"
 end
