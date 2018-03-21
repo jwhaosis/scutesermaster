@@ -1,7 +1,14 @@
 require 'sinatra'
 
+$iter = 0
+
 get '/' do
-  redirect "http://scuteser.herokuapp.com"
+  if $iter == 0
+    redirect "http://scuteser.herokuapp.com"
+    $iter+=1
+  else
+    $iter-=1
+  end
 end
 
 get '/blank' do
