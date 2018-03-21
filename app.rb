@@ -1,13 +1,11 @@
 require 'sinatra'
 
-$iter = 0
-
 get '/' do
-  if $iter == 0
+  if Counter.count == 0
     redirect "http://scuteser.herokuapp.com"
-    $iter+=1
+    Counter.new (count: 1)
   else
-    $iter-=1
+    Counter.find(count: 1).destroy
   end
 end
 
