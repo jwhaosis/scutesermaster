@@ -10,7 +10,7 @@ redis.setnx "loadc", "100"
 
 get '/' do
   redis.incr "loadc"
-  if (redis.get "loadc").to_i%2 != 0
+  if (redis.get "loadc").to_i%10 != 0
     redirect 'http://scuteser.herokuapp.com/'
   end
 end
