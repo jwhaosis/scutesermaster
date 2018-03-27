@@ -1,5 +1,0 @@
-development:
-  adapter: postgresql
-  encoding: unicode
-  database: scutesermaster
-  pool: 1

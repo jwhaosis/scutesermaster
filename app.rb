@@ -1,11 +1,10 @@
 require 'sinatra'
+require 'em-http-request'
 
 get '/' do
-  if Counter.count == 0
-    redirect "http://scuteser.herokuapp.com"
-    Counter.new (count: 1)
-  else
-    Counter.find(count: 1).destroy
+  EventMachine.run do
+    http = EventMachine::HttpRequest.new('http://scuteser.herokuapp.com/').get
+    http.callback { p http.last_effective_url }
   end
 end
 
