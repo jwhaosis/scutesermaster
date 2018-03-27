@@ -23,7 +23,7 @@ build-iPhoneOS/
 build-iPhoneSimulator/
 dump.rdb
 .byebug_history
-.redis-stable.tar.gz
+redis-stable.tar.gz
 
 ## Specific to RubyMotion (use of CocoaPods):
 #
