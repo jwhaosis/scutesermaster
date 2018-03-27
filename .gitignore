@@ -9,6 +9,7 @@
 /test/tmp/
 /test/version_tmp/
 /tmp/
+/redis-stable
 
 # Used by dotenv library to load environment variables.
 # .env
@@ -20,6 +21,9 @@ build/
 *.bridgesupport
 build-iPhoneOS/
 build-iPhoneSimulator/
+dump.rdb
+.byebug_history
+.redis-stable.tar.gz
 
 ## Specific to RubyMotion (use of CocoaPods):
 #
