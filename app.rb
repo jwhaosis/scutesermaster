@@ -2,10 +2,11 @@ require 'sinatra'
 require 'em-http-request'
 
 get '/' do
-  EventMachine.run do
-    http = EventMachine::HttpRequest.new('http://scuteser.herokuapp.com/').get
-    http.callback { p http.last_effective_url }
-  end
+  redirect 'http://scuteser.herokuapp.com/'
+  #EventMachine.run do
+  #  http = EventMachine::HttpRequest.new('http://scuteser.herokuapp.com/').get
+  #  http.callback { p http.last_effective_url }
+  #end
 end
 
 get '/blank' do
