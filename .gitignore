@@ -10,9 +10,10 @@
 /test/version_tmp/
 /tmp/
 /redis-stable
+/node_modules
 
 # Used by dotenv library to load environment variables.
-# .env
+.env
 
 ## Specific to RubyMotion:
 .dat*

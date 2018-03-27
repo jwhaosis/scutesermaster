@@ -1,3 +1,4 @@
 require './app'
-run Sinatra::Application
+
 set :server, :puma
+run Sinatra::Application

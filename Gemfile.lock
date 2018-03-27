@@ -17,6 +17,7 @@ GEM
     arel (8.0.0)
     concurrent-ruby (1.0.5)
     cookiejar (0.3.3)
+    dotenv (2.2.1)
     em-http-request (1.1.5)
       addressable (>= 2.3.4)
       cookiejar (!= 0.3.1)
@@ -56,6 +57,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  dotenv
   em-http-request
   pg
   puma
