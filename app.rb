@@ -10,8 +10,15 @@ redis.setnx "loadc", "100"
 
 get '/' do
   redis.incr "loadc"
-  if (redis.get "loadc").to_i%10 == 0
+  target = (redis.get "loadc").to_i%10
+  if target == 0
     redirect 'http://scuteser.herokuapp.com/'
+  elsif target == 1
+    redirect 'http://scuteser-2.herokuapp.com/'
+  elsif target == 2
+    redirect 'http://scuteser-3.herokuapp.com/'
+  elsif target == 3
+    redirect 'http://scuteser-4.herokuapp.com/'
   end
 end
 
@@ -21,6 +28,10 @@ end
 
 get '/test' do
 
+end
+
+get '/loaderio-87117f3cc6f3476f7ec8e1f03770d4f8/' do
+  "loaderio-87117f3cc6f3476f7ec8e1f03770d4f8"
 end
 
 get '/loaderio-db0de517c7188e5b1e035c98a0e33e25/' do
