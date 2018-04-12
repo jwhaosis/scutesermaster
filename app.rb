@@ -10,7 +10,7 @@ redis.setnx "loadc", "100"
 
 get '/' do
   redis.incr "loadc"
-  target = (redis.get "loadc").to_i%10
+  target = (redis.get "loadc").to_i%5
   if target == 0
     redirect 'http://scuteser.herokuapp.com/'
   elsif target == 1
@@ -20,14 +20,6 @@ get '/' do
   elsif target == 3
     redirect 'http://scuteser-4.herokuapp.com/'
   end
-end
-
-get '/blank' do
-  erb :master
-end
-
-get '/test' do
-
 end
 
 get '/loaderio-87117f3cc6f3476f7ec8e1f03770d4f8/' do
