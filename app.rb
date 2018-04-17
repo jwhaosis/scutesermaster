@@ -8,7 +8,7 @@ uri = URI.parse(ENV["REDIS_URI"])
 redis = Redis.new(:host => uri, :port => 10619, :password => ENV["REDIS_PASS"])
 redis.setnx "loadc", "100"
 
-get '/' do
+after do
   redis.incr "loadc"
   target = (redis.get "loadc").to_i%5
   if target == 0
@@ -20,6 +20,22 @@ get '/' do
   elsif target == 3
     redirect 'http://scuteser-4.herokuapp.com/'
   end
+end
+
+get '/' do
+  
+end
+
+get '/:path1' do
+
+end
+
+get '/:path1/:path2' do
+
+end
+
+get '/:path1/:path2/:path3' do
+
 end
 
 get '/loaderio-87117f3cc6f3476f7ec8e1f03770d4f8/' do
