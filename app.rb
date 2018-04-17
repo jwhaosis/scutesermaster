@@ -13,9 +13,8 @@ second_uri = '.herokuapp.com/'
 after do
   redis.incr "loadc"
   target = 1 + (redis.get "loadc").to_i%4
-  if second_uri.include? "loaderio"
-    send_file "loader.html"
-  elsif target == 1
+
+  if target == 1
     redirect first_uri + second_uri
   else
     redirect first_uri + "-#{target}" + second_uri
