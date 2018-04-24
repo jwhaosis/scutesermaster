@@ -19,9 +19,52 @@ end
 
 get '/test/reset/all' do
   EM.run {
+    multi = EM::MultiRequest.new
     urls.each do |url|
-      request = EM::HttpRequest.new("#{url}/test/reset/all").post
+      multi.add url, EM::HttpRequest.new("#{url}/test/reset/all").get
     end
+    multi.callback do
+      EM.stop
+    end
+  }
+end
+
+get '/test/reset/standard' do
+  user_c = params[:users].to_i
+  tweet_c = params[:tweets].to_i
+  follower_c = params[:followers].to_i
+  EM.run{
+    multi = EM::MultiRequest.new
+    urls.each do |url|
+      multi.add url, EM::HttpRequest.new("#{url}/test/reset/standard?users=#{user_c}&tweets=#{tweet_c}&followers=#{follower_c}").get
+    end
+    multi.callback do
+      EM.stop
+    end
+  }
+end
+
+get '/test/users/create' do
+  count = params[:count].to_i
+  tweets = params[:tweets].to_i
+  EM.run{
+    request = EM::HttpRequest.new("#{url[0]}/test/create?count=#{count}&tweets=#{tweets}").get
+    EM.stop
+  }
+end
+
+get '/test/user/testuser/tweets' do
+  count = params[:count].to_i
+  EM.run{
+    request = EM::HttpRequest.new("#{url[0]}/test/user/testuser/tweets?count=#{count}").get
+    EM.stop
+  }
+end
+
+get '/test/user/testuser/follow' do
+  count = params[:count].to_i
+  EM.run{
+    request = EM::HttpRequest.new("#{url[0]}/test/user/testuser/follow?count=#{count}").get
     EM.stop
   }
 end
