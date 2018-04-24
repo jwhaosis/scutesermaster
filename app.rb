@@ -8,8 +8,8 @@ $redis = Redis.new(:host => ENV["REDIS_URI"], :port => 10619, :password => ENV["
 $redis.setnx "loadc", "100"
 urls = ["https://scuteser.herokuapp.com","https://scuteser-2.herokuapp.com","https://scuteser-3.herokuapp.com","https://scuteser-4.herokuapp.com"]
 
-get '/loaderio-31553ee16833082cefdca79936018ba8/' do
-  'loaderio-31553ee16833082cefdca79936018ba8'
+get '/loaderio-87117f3cc6f3476f7ec8e1f03770d4f8/' do
+  'loaderio-87117f3cc6f3476f7ec8e1f03770d4f8'
 end
 
 get '/' do
