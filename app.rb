@@ -7,6 +7,7 @@ Dotenv.load
 $redis = Redis.new(:host => ENV["REDIS_URI"], :port => 10619, :password => ENV["REDIS_PASS"])
 $redis.setnx "loadc", "100"
 urls = ["https://scuteser.herokuapp.com","https://scuteser-2.herokuapp.com","https://scuteser-3.herokuapp.com","https://scuteser-4.herokuapp.com"]
+dburls = ["https://scuteser-db1.herokuapp.com","https://scuteser-db2.herokuapp.com","https://scuteser-db3.herokuapp.com","https://scuteser-db4.herokuapp.com"]
 
 get '/loaderio-87117f3cc6f3476f7ec8e1f03770d4f8/' do
   'loaderio-87117f3cc6f3476f7ec8e1f03770d4f8'
@@ -15,6 +16,18 @@ end
 get '/' do
  $redis.incr "loadc"
  redirect urls[($redis.get "loadc").to_i%4]
+end
+
+get '/sync' do
+  EM.run {
+    multi = EM::MultiRequest.new
+    dburls.each do |dburl|
+      multi.add dburl, EM::HttpRequest.new("#{dburl}/sync").post
+    end
+    multi.callback do
+      EM.stop
+    end
+  }
 end
 
 get '/test/reset/all' do
@@ -40,6 +53,11 @@ get '/test/reset/standard' do
     end
     multi.callback do
       EM.stop
+    multi = EM::MultiRequest.new
+    dburls.each do |dburl|
+      multi.add dburl, EM::HttpRequest.new("#{dburl}/sync/self").post
+    end
+    multi.callback do
     end
   }
 end
@@ -82,4 +100,19 @@ end
 get '/:path1/:path2/:path3' do
   $redis.incr "loadc"
   redirect "#{urls[($redis.get "loadc").to_i%4]}/#{params[:path1]}/#{params[:path2]}/#{params[:path3]}"
+end
+
+get '/:path1/:path2/:path3/:path4' do
+  $redis.incr "loadc"
+  redirect "#{urls[($redis.get "loadc").to_i%4]}/#{params[:path1]}/#{params[:path2]}/#{params[:path3]}/#{params[:path4]}"
+end
+
+get '/:path1/:path2/:path3/:path4/:path5' do
+  $redis.incr "loadc"
+  redirect "#{urls[($redis.get "loadc").to_i%4]}/#{params[:path1]}/#{params[:path2]}/#{params[:path3]}/#{params[:path4]}/#{params[:path5]}"
+end
+
+get '/:path1/:path2/:path3/:path4/:path5/:path6' do
+  $redis.incr "loadc"
+  redirect "#{urls[($redis.get "loadc").to_i%4]}/#{params[:path1]}/#{params[:path2]}/#{params[:path3]}/#{params[:path4]}/#{params[:path5]}/#{params[:path6]}"
 end
