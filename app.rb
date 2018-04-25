@@ -20,11 +20,11 @@ end
 
 get '/sync' do
   EM.run {
-    multi = EM::MultiRequest.new
+    sync = EM::MultiRequest.new
     dburls.each do |dburl|
-      multi.add dburl, EM::HttpRequest.new("#{dburl}/sync").post
+      sync.add dburl, EM::HttpRequest.new("#{dburl}/sync").post
     end
-    multi.callback do
+    sync.callback do
       EM.stop
     end
   }
@@ -46,18 +46,22 @@ get '/test/reset/standard' do
   user_c = params[:users].to_i
   tweet_c = params[:tweets].to_i
   follower_c = params[:followers].to_i
-  EM.run{
-    multi = EM::MultiRequest.new
+  EM.run {
+    seed = EM::MultiRequest.new
     urls.each do |url|
-      multi.add url, EM::HttpRequest.new("#{url}/test/reset/standard?users=#{user_c}&tweets=#{tweet_c}&followers=#{follower_c}").get
+      seed.add url, EM::HttpRequest.new("#{url}/test/reset/standard?users=#{user_c}&tweets=#{tweet_c}&followers=#{follower_c}").get
     end
-    multi.callback do
+    seed.callback{
       EM.stop
-    multi = EM::MultiRequest.new
+    }
+  }
+  EM.run {
+    sync = EM::MultiRequest.new
     dburls.each do |dburl|
-      multi.add dburl, EM::HttpRequest.new("#{dburl}/sync/self").post
+      sync.add dburl, EM::HttpRequest.new("#{dburl}/sync").post
     end
-    multi.callback do
+    sync.callback do
+      EM.stop
     end
   }
 end
@@ -67,7 +71,12 @@ get '/test/users/create' do
   tweets = params[:tweets].to_i
   EM.run{
     request = EM::HttpRequest.new("#{url[0]}/test/create?count=#{count}&tweets=#{tweets}").get
-    EM.stop
+    request.callback{
+      EM.stop
+    }
+    request.errback{
+      EM.stop
+    }
   }
 end
 
@@ -75,7 +84,12 @@ get '/test/user/testuser/tweets' do
   count = params[:count].to_i
   EM.run{
     request = EM::HttpRequest.new("#{url[0]}/test/user/testuser/tweets?count=#{count}").get
-    EM.stop
+    request.callback{
+      EM.stop
+    }
+    request.errback{
+      EM.stop
+    }
   }
 end
 
@@ -83,7 +97,12 @@ get '/test/user/testuser/follow' do
   count = params[:count].to_i
   EM.run{
     request = EM::HttpRequest.new("#{url[0]}/test/user/testuser/follow?count=#{count}").get
-    EM.stop
+    request.callback{
+      EM.stop
+    }
+    request.errback{
+      EM.stop
+    }
   }
 end
 
