@@ -48,6 +48,9 @@ get '/test/reset/all' do
       EM.stop
     end
   }
+  $redis.keys.each do |key|
+    $redis.del(key)
+  end
 end
 
 get '/test/reset/standard' do
