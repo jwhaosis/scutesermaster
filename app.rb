@@ -2,6 +2,8 @@ require 'sinatra'
 require 'em-http-request'
 require 'redis'
 require 'dotenv'
+require "net/http"
+require "uri"
 
 Dotenv.load
 $redis = Redis.new(:host => ENV["REDIS_URI"], :port => 10619, :password => ENV["REDIS_PASS"])
@@ -16,6 +18,12 @@ end
 get '/' do
  $redis.incr "loadc"
  redirect urls[($redis.get "loadc").to_i%4]
+end
+
+post '/user/testuser/tweet' do
+  $redis.incr "loadc"
+  uri = URI.parse("#{urls[($redis.get "loadc").to_i%4]}/user/testuser/tweet")
+  response = Net::HTTP.post_form(uri, {})
 end
 
 get '/sync' do
