@@ -6,7 +6,7 @@ require "net/http"
 require "uri"
 
 Dotenv.load
-$redis = Redis.new(:host => ENV["REDIS_URI"], :port => 10619, :password => ENV["REDIS_PASS"])
+$redis = Redis.new(:host => ENV["REDIS_URI"], :port => 17627, :password => ENV["REDIS_PASS"])
 $redis.setnx "loadc", "100"
 urls = ["https://scuteser.herokuapp.com","https://scuteser-2.herokuapp.com","https://scuteser-3.herokuapp.com","https://scuteser-4.herokuapp.com"]
 dburls = ["https://scuteser-db1.herokuapp.com","https://scuteser-db2.herokuapp.com","https://scuteser-db3.herokuapp.com","https://scuteser-db4.herokuapp.com"]
