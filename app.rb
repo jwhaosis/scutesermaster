@@ -75,6 +75,9 @@ get '/test/reset/standard' do
       EM.stop
     end
   }
+  $redis.keys.each do |key|
+    $redis.del(key)
+  end
 end
 
 get '/test/users/create' do
